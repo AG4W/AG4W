@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<!--
+-->
+<html>
+	<head>
+		<title>Axel Gustafsson :: Project Rögue</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body id="top">
+			<!-- Banner -->
+			<!--
+				To use a video as your background, set data-video to the name of your video without
+				its extension (eg. images/banner). Your video must be available in both .mp4 and .webm
+				formats to work correctly.
+			-->
+				<section id="banner" data-video="images/projectrogue/UglyGleamingConch">
+					<div class="inner">
+						<header>
+                            <h1><a href="https://axelgustafsson.se">Axel Gustafsson</a></h1>
+							<p>C#, C++, Java, JavaFX, Python, HTML5, CSS3, Debian/Apache2, Unity, ShaderLab, UNET, Mirror, Photon, VFX</p>
+						</header>
+                        <a href="#main" class="more">Learn More</a>
+					</div>
+				</section>
+			<!-- Main -->
+				<div id="main">
+					<div class="inner">
+                    <!-- Boxes -->
+                        <div id="description">
+                            <h3>Project Rögue</h3>
+                            <p>Project Rögue is a modern take on the classic rogue-like format, it features;</p>
+                            <p>Classic role-playing mechanics with multiple attributes, vitals and spells.
+                                <br>Deep combat mechanics - the player has individual control over both hands. Any item is a valid weapon with a varying number of attacks and abilities.
+                                <br>Procedural dungeons, items and enemies.
+                                <br>Lua-defined item actions - enabling outside authors to script attacks and abilities at their leisure.
+                                <br>Impressive AAA-level graphics.
+                            </p>
+                            <p>
+                                At the foundation of Project Rögue lies the command pattern; It was specifically chosen to easily facilitate networking integration later on (No need to synchronize game-state, just send all actions since the start of the game to any player - the initial world seed is synchronized at start), allowing you to enjoy the classic rogue-like experience with your friends in a cooperative setting.
+                                <br>Project Rögue is developed on my spare time as a passion project - and has been in development since Mars 2019.
+                            </p>
+                        </div>
+                        <div id="code-box">
+                                <h3>Feature Highlight: Dijkstra Implementation, Priority Queue Optimization</h3>
+                                <pre><code>public static Dictionary&lt;Tile, float&gt; Dijkstra(Dictionary&lt;Tile, float&gt; map, Tile origin, int maxDistance, bool ignoreOccupiedTiles)
+{
+    //can be removed if we can guarantee non-corrupted maps to improve performance further - however in the current build this is not necessary.
+    map.Clear();
+
+    SimplePriorityQueue&lt;Tile, float&gt; open = new SimplePriorityQueue&lt;Tile, float&gt;();
+    HashSet&lt;Tile&gt; closed = new HashSet&lt;Tile&gt;();
+
+    open.Enqueue(origin, 0f);
+    map.Add(origin, 0f);
+
+    while (open.Count > 0)
+    {
+        Tile tile = open.Dequeue();
+        
+        closed.Add(tile);
+
+        float cd = map[tile];
+                                                
+        //operate around current tile
+        for (int xAround = (int)tile.position.x - 1; xAround <= (int)tile.position.x + 1; xAround++)
+        {
+            for (int zAround = (int)tile.position.z - 1; zAround <= (int)tile.position.z + 1; zAround++)
+            {
+                //skip positions that'd be outside of the grid boundaries
+                if (xAround < 0 || xAround > Grid.size - 1 || zAround < 0 || zAround > Grid.size - 1)
+                    continue;
+                                    
+                Tile current = Grid.Get(xAround, zAround);
+                                                    
+                if (closed.Contains(current) || (ignoreOccupiedTiles ? !current.isTraversable : current.status != TileStatus.Walkable))
+                    continue;
+                                    
+                float pd = cd + Distance(tile, current);
+                                                    
+                if (pd > maxDistance)
+                    continue;
+                                    
+                if (map.ContainsKey(current))
+                {
+                    if (map[current] > pd)
+                        map[current] = pd;
+                                    
+                    open.UpdatePriority(current, pd);
+                }
+                else
+                {
+                    map[current] = pd;
+                    open.Enqueue(current, pd);
+                }
+            }
+        }
+    }
+                                            
+    return map;
+}                           </code></pre><p>Project Rögue relies heavily on Dijkstra for pathfinding, AI decisions, luminosity (see below how for a write-down on how it affects gameplay), tile-based audio, etc.
+                                <br>To avoid massive garbage allocation, I used a simple recycling implementation where entities reuse their maps.
+                                <br>The prime candidate for pathfinding from the start was actually A-star, which I'm fairly comfortable with since earlier projects - however, when implemented with the priority queue, Dijkstra is faster.
+                                <br>This also let's me reuse the same algorithm in almost all cases, making my codebase much easier to maintain.
+                                </p>
+                            </div>
+                            <div id="video-box">
+                                <h3>Feature Highlight: Light Sources</h3>
+                                <video width="100%" controls>
+                                    <source src="images/projectrogue/lightsourceDeprecation.mp4"/>
+                                </video>
+                                <p><i>Note how the player field of view decreases as the luminosity levels are decremented over time by the deprecating light source influence.</i></p>
+                                    <p>Light sources affect player character vision and other vitals such as accuracy and sanity. Most of my AI decision making, detection and pathfinding also relies on local tile luminosity levels, some monsters will hunt luminated areas, whereas others will actively avoid them.
+                                    <br>The idea was to add a sense of stress and dread to the player, as the light source lifetime and range slowly deprecates over multiple turns.</p>
+                                    <p>To incorporate the luminosity levels in my AI, every actor uses a set of "maps" (<code>Dictionary&lt;Tile, float&gt;</code>), currently one for luminosity, and one for audio levels.
+                                    <br>These maps allow the AI entity to make intelligent decisions based on local luminosity, aswell as giving the entity a "memory" of where it last heard a loud sound.
+                                    </p>
+                                <video width="100%" controls>
+                                    <source src="images/projectrogue/UglyGleamingConch.webm"/>
+                                </video>
+                                <p><i>
+                                    The same scenario with the debug view disabled, we can clearly see how the mood tenses as the light dims more and more over multiple turns.
+                                </i></p>
+                            </div>
+                        
+                        <a href="https://github.com/AG4W/ChonkyChungus" target="_blank">Github</a>
+					</div>
+				</div>
+			<!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+                        <!--<h2>Dunno what to put here.</h2>
+						<p>Misc links.</p>-->
+						<ul class="icons">
+                            <li><a href="https://twitter.com/n4ttuggla" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                            <li><a href="https://github.com/ag4w" class="icon fa-github"><span class="label">GitHub</span></a></li>
+                            <li><a href="https://www.linkedin.com/in/axel-gustafsson-bb863318b" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                            <li><a href="https://axelgustafsson.se/resume.html" class="icon fa-file-pdf-o"><span class="label">Resume (.pdf)</span></a></li>
+                            <li><a href="mailto:axel.w.gustafsson@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+					</div>
+				</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<!--<script src="assets/js/jquery.poptrox.min.js"></script>-->
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+	</body>
+</html>
