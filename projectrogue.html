@@ -136,7 +136,64 @@ end
                             <div id="textbox">
                                 <h3><a name="ProceduralGeneration">Procedurally generating interesting dungeons.</a></h3>
 
+                                <p>
+                                    Dungeons in Project Rögue are generated in a hierarchial manner - at the root is the <code>Dungeon</code>-class which spawns
+                                    <br><code>Region</code>s (<code>Room</code> and <code>Connection</code>), whom in turn spawn <code>PCGEntity</code>, whom spawns <code>SubPCGEntity</code>.
+                                </p>
+
+                                <p>
+                                    <pre><code>Dungeon
+    Region
+        Room
+            PCGEntity
+                SubPCGEntity
+        Connection
+            PCGEntity
+                SubPCGEntity</code></pre>
+                                </p>
+
+                                <p>Before generation some general settings such as dungeon theme, size, room count, enemy types are randomized.
+                                    <br>A simple <code>int[sizeX, sizeY, sizeZ]</code> is initialized.
+                                    <br>The dungeon will then recursively attempt to place rooms at random coordinates until it has placed enough rooms.
+                                    <br>A room is given the origin coordinates along with size parameters - a <code>virtual bool Validate()</code>-function is responsible for this task.
+                                    <br>This lets me implement different types of room (square, circle, great hall, chapel, cave, etc) without having to react to niche cases in my code.
+                                    <br>If a room is successfully validated it will randomize more specific settings such as architecture, materials, etc, using the dungeon theme and room type as a filter to maintain a cohesive dungeon without losing variation.
+                                    <br>Every tile in the room bound is also marked with a <code>roomIndex</code> in the <code>int[,,]</code>.
+                                </p>
+
+                                <p>
+                                    Upon completion of room spawning, the dungeon will iterate through every room and generate a <code>Connection</code> to another room (with unconnected rooms given priority).
+                                    <br>Connections are brute-force tunneled in L shapes, and merge with any other rooms or connections they encounter.
+                                    <br>Similarly to rooms, connections also randomize types, architecture, materials etc when created.
+                                </p>
+
+                                <p>
+                                    After finally completing the generation, every room and connection is instantied - any location in the <code>int[,,]</code> where tiles with different room indices is marked as either walls or doors.
+                                    <br>Any non-used tile is marked as void, and the grid is initialized.
+                                </p>
+                                
+                                <p>
+                                    So, what's the point with <code>PCGEntity</code> and <code>SubPCGEntity</code>?
+                                    <br>One common issue with procedurally generated dungeons is that they tend to become very repetitive, as the player starts recognize assets resued.
+                                    <br>To avoid that, any asset that is placed in the dungeon regions is marked as a <code>PCGEntity</code>, this script contains some metadata regarding the asset itself.
+                                    <br>Such as; 
+                                    <br>Does it block the tile it is placed on? 
+                                    <br>Does it block any surrounding tiles? 
+                                    <br>Does it block line of sight?
+                                </p>
+
+                                <p>
+                                    When spawned, any object with a <code>SubPCGEntity</code>-script parented under a <code>PCGEntity</code> will also be spawned, this allows me to easily decorate larger setpieces at runtime.
+                                    <br>The <code>SubPCGEntity</code> contains a category (which allows regions to dictate how much of a certain type they want, as a number between <code>0 .. 1</code>), a list of prefabs it can spawn, and some placement randomization values.
+                                    <br>I believe I can let the difference speak for itself.</p>
+
+                                <img src = "images/projectrogue/noSubEntities.png" width="100%" height="auto">
+                                <p><i>Without.</i></p>
+                                <img src = "images/projectrogue/withSubEntities.png" width="100%" height="auto">
+                                <p><i>With.</i></p>
+                                
                                 <img src = "images/projectrogue/dungenGeneration1.png" width="100%" height ="auto"></img>
+                                <p><i>A smaller procedurally generated dungeon, circa 30 rooms.</i></p>
                             </div>
                             <div id="textbox">
                                     <h3><a name="CharacterCustomization">Character Customization.</a></h3>
