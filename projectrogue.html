@@ -32,7 +32,7 @@
                             <h3>Project Rögue</h3>
                             <p><i>A party dungeon crawler, build and manage your company of treasure hunters and travel a procedural world in the hunt for loot and glory.</i></p>
                             <p>
-                                - video / screenshots - 
+                                - Table of Contents - 
                                 
                                 <br><a href="#LuaIntegration">* Lua Integration</a>
                                 <br><a href="#ProceduralGeneration">* Procedural Generation</a>
@@ -185,18 +185,25 @@ end
                                 <p>
                                     When spawned, any object with a <code>SubPCGEntity</code>-script parented under a <code>PCGEntity</code> will also be spawned, this allows me to easily decorate larger setpieces at runtime.
                                     <br>The <code>SubPCGEntity</code> contains a category (which allows regions to dictate how much of a certain type they want, as a number between <code>0 .. 1</code>), a list of prefabs it can spawn, and some placement randomization values.
-                                    <br>I believe I can let the difference speak for itself.</p>
+                                    <br>I believe I can let the difference speak for itself in the screenshots below.</p>
 
                                 <img src = "images/projectrogue/noSubEntities.png" width="100%" height="auto">
                                 <p><i>Without.</i></p>
                                 <img src = "images/projectrogue/withSubEntities.png" width="100%" height="auto">
                                 <p><i>With.</i></p>
-                                
+
+                                <p>
+                                    The total generation and instantiation of a smaller dungeon takes around 3-4 seconds, which is not blazing fast by any means. 
+                                    <br>But it doesn't really present a nuisance for the player either - as always, there's room for improvement.
+                                </p>
+
                                 <img src = "images/projectrogue/dungenGeneration1.png" width="100%" height ="auto"></img>
                                 <p><i>A smaller procedurally generated dungeon, circa 30 rooms.</i></p>
                             </div>
                             <div id="textbox">
-                                    <h3><a name="CharacterCustomization">Character Customization.</a></h3>
+                                <h3><a name="CharacterCustomization">Character Customization.</a></h3>
+
+                                
                             </div>
                             <div id="textbox">
                                     <h3><a name="Dijkstra">Dijkstra Implementation using Priority Queue Optimization.</a></h3>
