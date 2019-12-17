@@ -30,18 +30,55 @@
                     <!-- Boxes -->
                         <div id="description">
                             <h3>Project Rögue</h3>
-                            <p><i>A party dungeon crawler, build and manage your company of treasure hunters and travel a procedural world in the hunt for loot and glory.</i></p>
                             <p>
-                                - Table of Contents - 
-                                
-                                <br><a href="#LuaIntegration">* Lua Integration</a>
+                                <i>"A party dungeon crawler, recruit and manage a company of treasure hunters, glory-seekers, archeologists and other adventurers in a procedurally generated world."</i>
+                                <br>
+                                <br>Project Rögue is a solo project, it has been in development since may 2019, it is heavily inspired by games such as XCOM, Darkest Dungeon and Symbaroum.
+                                <br>All code in Project Rögue is authored by me.
+                                <br>All assets in Project Rögue are made by me unless mentioned otherwise.
+                            </p>
+
+                            <video controls width="100%">
+                                <source src="images/projectrogue/webms/CharacterMovementAndInteraction.mp4" type="video/webm">
+                                <source src="images/projectrogue/webms/CharacterMovementAndInteraction.mp4" type="video/mp4">
+
+                                Sorry, your browser doesn't support embedded videos.
+                            </video>
+                            
+                            <h4>Table of Contents</h4>
+                            <p>
+                                <a href="#LuaIntegration">* Lua Integration</a>
                                 <br><a href="#ProceduralGeneration">* Procedural Generation</a>
                                 <br><a href="#CharacterCustomization">* Character Customization</a>
                                 <br><a href="#Dijkstra">* Dijkstra Pathfinding</a>
                             </p>
-                            <img src = "images/projectrogue/projectRogueShaders.png" width="25%" height="auto"></img>
-                            <img src = "images/projectrogue/projectRogueDesert.png" width="25%" height="auto"></img>
-                            <img src = "images/projectrogue/projectRogueShaders.png" width="25%" height="auto"></img>
+                            
+                            <div class="row">
+                                <div class="column">
+                                    <img src="images/projectrogue/projectRogue4.png" alt="Project Rögue Screenshot #2" style="width:100%" onclick="myFunction(this);">
+                                  </div>
+                                <div class="column">
+                                  <img src="images/projectrogue/projectRogueDesert.png" alt="Project Rögue Screenshot #2" style="width:100%" onclick="myFunction(this);">
+                                </div>
+                                <div class="column">
+                                  <img src="images/projectrogue/projectRogueShaders.png" alt="Project Rögue Screenshot #3" style="width:100%" onclick="myFunction(this);">
+                                </div>
+                              </div>
+                              <div class="container">
+                                <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+                                <img id="expandedImg" style="width:100%">
+                                <div id="imgtext"></div>
+                              </div>
+
+                              <script>
+                                function myFunction(imgs) {
+                                    var expandImg = document.getElementById("expandedImg");
+                                    var imgText = document.getElementById("imgtext");
+                                    expandImg.src = imgs.src;
+                                    imgText.innerHTML = imgs.alt;
+                                    expandImg.parentElement.style.display = "block";
+                                }
+                                </script>
                         </div>
                             <div id="textbox">
                                 <h3><a name="LuaIntegration">Using Lua to define spells, item abilties and other actions.</a></h3>
@@ -191,77 +228,79 @@ end
                                 <p><i>Without.</i></p>
                                 <img src = "images/projectrogue/withSubEntities.png" width="100%" height="auto">
                                 <p><i>With.</i></p>
-
-                                <p>
-                                    The total generation and instantiation of a smaller dungeon takes around 3-4 seconds, which is not blazing fast by any means. 
-                                    <br>But it doesn't really present a nuisance for the player either - as always, there's room for improvement.
-                                </p>
+                                <p>The end result currently looks like this.</p>
 
                                 <img src = "images/projectrogue/dungenGeneration1.png" width="100%" height ="auto"></img>
                                 <p><i>A smaller procedurally generated dungeon, circa 30 rooms.</i></p>
                             </div>
                             <div id="textbox">
                                 <h3><a name="CharacterCustomization">Character Customization.</a></h3>
+                                <video controls width="100%">
+                                    <source src="images/projectrogue/webms/ProjectRogueCharacterCustomizationAndSquadSelection.webm" type="video/webm">
+                                    <source src="images/projectrogue/webms/ProjectRogueCharacterCustomizationAndSquadSelection.mp4" type="video/mp4">
+
+                                    Sorry, your browser doesn't support embedded videos.
+                                </video>
                             </div>
                             <div id="textbox">
                                     <h3><a name="Dijkstra">Dijkstra Implementation using Priority Queue Optimization.</a></h3>
                                         <pre>
                                             <code>public static Dictionary&lt;Tile, float&gt; Dijkstra(Dictionary&lt;Tile, float&gt; map, Tile origin, int maxDistance, bool ignoreOccupiedTiles)
+{
+    //can be removed if we can guarantee non-corrupted maps to improve performance further - however in the current build this is not necessary.
+    map.Clear();
+
+    SimplePriorityQueue&lt;Tile, float&gt; open = new SimplePriorityQueue&lt;Tile, float&gt;();
+    HashSet&lt;Tile&gt; closed = new HashSet&lt;Tile&gt;();
+
+    open.Enqueue(origin, 0f);
+    map.Add(origin, 0f);
+
+    while (open.Count > 0)
+    {
+        Tile tile = open.Dequeue();
+        
+        closed.Add(tile);
+
+        float cd = map[tile];
+                                                
+        //operate around current tile
+        for (int xAround = (int)tile.position.x - 1; xAround <= (int)tile.position.x + 1; xAround++)
         {
-            //can be removed if we can guarantee non-corrupted maps to improve performance further - however in the current build this is not necessary.
-            map.Clear();
-        
-            SimplePriorityQueue&lt;Tile, float&gt; open = new SimplePriorityQueue&lt;Tile, float&gt;();
-            HashSet&lt;Tile&gt; closed = new HashSet&lt;Tile&gt;();
-        
-            open.Enqueue(origin, 0f);
-            map.Add(origin, 0f);
-        
-            while (open.Count > 0)
+            for (int zAround = (int)tile.position.z - 1; zAround <= (int)tile.position.z + 1; zAround++)
             {
-                Tile tile = open.Dequeue();
-                
-                closed.Add(tile);
-        
-                float cd = map[tile];
-                                                        
-                //operate around current tile
-                for (int xAround = (int)tile.position.x - 1; xAround <= (int)tile.position.x + 1; xAround++)
+                //skip positions that'd be outside of the grid boundaries
+                if (xAround < 0 || xAround > Grid.size - 1 || zAround < 0 || zAround > Grid.size - 1)
+                    continue;
+                                    
+                Tile current = Grid.Get(xAround, zAround);
+                                                    
+                if (closed.Contains(current) || (ignoreOccupiedTiles ? !current.isTraversable : current.status != TileStatus.Walkable))
+                    continue;
+                                    
+                float pd = cd + Distance(tile, current);
+                                                    
+                if (pd > maxDistance)
+                    continue;
+                                    
+                if (map.ContainsKey(current))
                 {
-                    for (int zAround = (int)tile.position.z - 1; zAround <= (int)tile.position.z + 1; zAround++)
-                    {
-                        //skip positions that'd be outside of the grid boundaries
-                        if (xAround < 0 || xAround > Grid.size - 1 || zAround < 0 || zAround > Grid.size - 1)
-                            continue;
-                                            
-                        Tile current = Grid.Get(xAround, zAround);
-                                                            
-                        if (closed.Contains(current) || (ignoreOccupiedTiles ? !current.isTraversable : current.status != TileStatus.Walkable))
-                            continue;
-                                            
-                        float pd = cd + Distance(tile, current);
-                                                            
-                        if (pd > maxDistance)
-                            continue;
-                                            
-                        if (map.ContainsKey(current))
-                        {
-                            if (map[current] > pd)
-                                map[current] = pd;
-                                            
-                            open.UpdatePriority(current, pd);
-                        }
-                        else
-                        {
-                            map[current] = pd;
-                            open.Enqueue(current, pd);
-                        }
-                    }
+                    if (map[current] > pd)
+                        map[current] = pd;
+                                    
+                    open.UpdatePriority(current, pd);
+                }
+                else
+                {
+                    map[current] = pd;
+                    open.Enqueue(current, pd);
                 }
             }
-                                                    
-            return map;
-        }                                   </code>
+        }
+    }
+                                            
+    return map;
+}                                   </code>
                                         </pre>
                             </div>
                         <a href="https://github.com/AG4W/ChonkyChungus" target="_blank">Github</a>
