@@ -45,14 +45,6 @@
                                 Sorry, your browser doesn't support embedded videos.
                             </video>
                             
-                            <h4>Table of Contents</h4>
-                            <p>
-                                <a href="#LuaIntegration">* Lua Integration</a>
-                                <br><a href="#ProceduralGeneration">* Procedural Generation</a>
-                                <br><a href="#CharacterCustomization">* Character Customization</a>
-                                <br><a href="#Dijkstra">* Dijkstra Pathfinding</a>
-                            </p>
-                            
                             <div class="row">
                                 <div class="column">
                                     <img src="images/projectrogue/projectRogue4.png" alt="Project Rögue Screenshot #2" style="width:100%" onclick="myFunction(this);">
@@ -69,6 +61,7 @@
                                 <img id="expandedImg" style="width:100%">
                                 <div id="imgtext"></div>
                               </div>
+                            <p><i>Click any of the images to enlarge.</i></p>
 
                               <script>
                                 function myFunction(imgs) {
@@ -79,6 +72,14 @@
                                     expandImg.parentElement.style.display = "block";
                                 }
                                 </script>
+                            
+                            <h4>Table of Contents</h4>
+                            <p>
+                                <a href="#LuaIntegration">* Lua Integration</a>
+                                <br><a href="#ProceduralGeneration">* Procedural Generation</a>
+                                <br><a href="#CharacterCustomization">* Character Customization</a>
+                                <br><a href="#Dijkstra">* Dijkstra Pathfinding</a>
+                            </p>
                         </div>
                             <div id="textbox">
                                 <h3><a name="LuaIntegration">Using Lua to define spells, item abilties and other actions.</a></h3>
@@ -170,6 +171,7 @@ end
                                     </code>
                                 </pre>
                             </div>
+                            <br><br>
                             <div id="textbox">
                                 <h3><a name="ProceduralGeneration">Procedurally generating interesting dungeons.</a></h3>
 
@@ -233,6 +235,7 @@ end
                                 <img src = "images/projectrogue/dungenGeneration1.png" width="100%" height ="auto"></img>
                                 <p><i>A smaller procedurally generated dungeon, circa 30 rooms.</i></p>
                             </div>
+                            <br><br>
                             <div id="textbox">
                                 <h3><a name="CharacterCustomization">Character Customization.</a></h3>
                                 <video controls width="100%">
@@ -242,6 +245,7 @@ end
                                     Sorry, your browser doesn't support embedded videos.
                                 </video>
                             </div>
+                            <br><br>
                             <div id="textbox">
                                     <h3><a name="Dijkstra">Dijkstra Implementation using Priority Queue Optimization.</a></h3>
                                         <pre>
