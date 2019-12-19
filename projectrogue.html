@@ -29,13 +29,13 @@
 					<div class="inner">
                     <!-- Boxes -->
                         <div id="description">
-                            <h3>Project Rögue</h3>
+                            <h3>Project Rögue (working title)</h3>
                             <p>
-                                <i>"A party dungeon crawler, recruit and manage a company of treasure hunters, glory-seekers, archeologists and other adventurers in a procedurally generated world."</i>
+                                <i>"A party dungeon crawler where you recruit and manage a company of treasure hunters, glory-seekers, archeologists and other adventurers in a procedurally generated world."</i>
                                 <br>
-                                <br>Project Rögue is a solo project, it has been in development since may 2019, it is heavily inspired by games such as XCOM, Darkest Dungeon and Symbaroum.
+                                <br>Project Rögue is a solo project that I have been developing since may 2019, it is heavily inspired by games such as XCOM, Darkest Dungeon, and Symbaroum.
                                 <br>All code in Project Rögue is authored by me.
-                                <br>All assets in Project Rögue are made by me unless mentioned otherwise.
+                                <br>All assets in Project Rögue are created by me unless mentioned otherwise.
                             </p>
 
                             <video controls width="100%">
@@ -79,15 +79,16 @@
                                 <br><a href="#ProceduralGeneration">* Procedural Generation</a>
                                 <br><a href="#CharacterCustomization">* Character Customization</a>
                                 <br><a href="#Dijkstra">* Dijkstra Pathfinding</a>
+                                <br><a href="#Bresenham">* Bresenham Linedrawing</a>
                             </p>
                         </div>
                             <div id="textbox">
-                                <h3><a name="LuaIntegration">Using Lua to define spells, item abilties and other actions.</a></h3>
+                                <h3><a name="LuaIntegration">Using Lua to define spells, item abilities and other actions.</a></h3>
                                 <p>
                                     Project Rögue uses a single class to define abilities and spells available in the game, called the <code>Action</code>-class.
                                     <br>Any item (equipment or weapon) might have an arbitrary (or none) amount of actions in addition to their normal stat-changing variables.
                                     <br>This class wraps a Lua runtime integration, enabling me (and future modders) to easily define actions in a scripting fashion - similar to how World Of Warcraft addons are implemented.
-                                    <br>The <code>Action</code>-class is accompanied by the <code>ActionContext</code>; a simple container class that exposes some local data which might be required in the action implementation.
+                                    <br>The <code>Action</code>-class is accompanied by the <code>ActionContext</code> (a simple container class that exposes some local data which might be required in the action implementation).
                                 </p>
                                 <p>
                                     The important parts of the Lua side of the action is the <code>activate(context)</code> and <code>execute(context)</code> methods.
@@ -244,70 +245,170 @@ end
 
                                     Sorry, your browser doesn't support embedded videos.
                                 </video>
+                                <p><i>Original human base mesh created using <a href="http://www.makehumancommunity.org/">MakeAHuman</a>.</i></p>
                             </div>
                             <br><br>
                             <div id="textbox">
                                     <h3><a name="Dijkstra">Dijkstra Implementation using Priority Queue Optimization.</a></h3>
+                                    <p>
+                                        When developing any game that requires pathfinding I tend to go with A* as the default choice, however, Project Rögue is turn-based, which lends itself incredibly well to Dijkstra maps.
+                                        <br>This means I can update my maps reactively whenever they become invalidated by some action (typically another actor moving, or something in the environment changing), instead of having to update the maps per frame.
+                                        <br>I can also prune any actor whom is not relevant in the current context (usually due to being too far away or somehow incapacitated).
+                                        <br><br>Project Rögue takes some inspiration from this <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps" target="_blank">RogueBasin article</a> to give each actor audio, line-of-sight, luminosity, and movement maps.
+                                        <br>Actors then use these maps when doing decision-making, creating emergent AI behaviours where monsters might stalk players in the darkness or stay away from/be drawn towards light/noise.
+                                    </p>
+
+                                    <video controls width="100%">
+                                        <source src="images/projectrogue/webms/lightsourceDeprecation.webm" type="video/webm">
+                                        <source src="images/projectrogue/webms/lightsourceDeprecation.mp4" type="video/mp4">
+        
+                                        Sorry, your browser doesn't support embedded videos.
+                                    </video>
+                                    <p><i>Luminosity (from player torch) visualized per tile, decreasing per turn.</i></p>
                                         <pre>
-                                            <code>public static Dictionary&lt;Tile, float&gt; Dijkstra(Dictionary&lt;Tile, float&gt; map, Tile origin, int maxDistance, bool ignoreOccupiedTiles)
+                                            <code>public static Dictionary<Tile, float> Dijkstra(Dictionary<Tile, float> map, Tile origin, int maxDistance, params TileStatus[] ignoreFilter)
 {
-    //can be removed if we can guarantee non-corrupted maps to improve performance further - however in the current build this is not necessary.
     map.Clear();
 
-    SimplePriorityQueue&lt;Tile, float&gt; open = new SimplePriorityQueue&lt;Tile, float&gt;();
-    HashSet&lt;Tile&gt; closed = new HashSet&lt;Tile&gt;();
+    SimplePriorityQueue<Tile, float> open = new SimplePriorityQueue<Tile, float>();
+    HashSet<Tile> closed = new HashSet<Tile>();
 
     open.Enqueue(origin, 0f);
     map.Add(origin, 0f);
 
     while (open.Count > 0)
     {
-        Tile tile = open.Dequeue();
-        
-        closed.Add(tile);
+        Tile t = open.Dequeue();
+    
+        closed.Add(t);
 
-        float cd = map[tile];
-                                                
-        //operate around current tile
-        for (int xAround = (int)tile.position.x - 1; xAround <= (int)tile.position.x + 1; xAround++)
+        float cd = map[t];
+
+        for (int xAround = (int)t.position.x - 1; xAround <= (int)t.position.x + 1; xAround++)
         {
-            for (int zAround = (int)tile.position.z - 1; zAround <= (int)tile.position.z + 1; zAround++)
+            for (int zAround = (int)t.position.z - 1; zAround <= (int)t.position.z + 1; zAround++)
             {
-                //skip positions that'd be outside of the grid boundaries
                 if (xAround < 0 || xAround > Grid.size - 1 || zAround < 0 || zAround > Grid.size - 1)
                     continue;
-                                    
-                Tile current = Grid.Get(xAround, zAround);
-                                                    
-                if (closed.Contains(current) || (ignoreOccupiedTiles ? !current.isTraversable : current.status != TileStatus.Walkable))
+
+                Tile c = Grid.Get(xAround, zAround);
+
+                if (closed.Contains(c) || ignoreFilter.Contains(c.status))
                     continue;
-                                    
-                float pd = cd + Distance(tile, current);
-                                                    
+
+                float pd = cd + Distance(t, c);
+            
                 if (pd > maxDistance)
                     continue;
-                                    
-                if (map.ContainsKey(current))
+
+                if (map.ContainsKey(c))
                 {
-                    if (map[current] > pd)
-                        map[current] = pd;
-                                    
-                    open.UpdatePriority(current, pd);
+                    if (map[c] > pd)
+                        map[c] = pd;
+
+                    open.UpdatePriority(c, pd);
                 }
                 else
                 {
-                    map[current] = pd;
-                    open.Enqueue(current, pd);
+                    map[c] = pd;
+                    open.Enqueue(c, pd);
                 }
             }
         }
     }
-                                            
+
     return map;
 }                                   </code>
-                                        </pre>
+                                </pre>
                             </div>
-                        <a href="https://github.com/AG4W/ChonkyChungus" target="_blank">Github</a>
+                            <div id="textbox">
+                                <h3><a name="Bresenham">Bresenham Implementation.</a></h3>
+                                <p>
+                                    Project Rögue uses a Bresenham line-drawing algorithm to draw lines for various gameplay purposes such as line-of-sight, targeting, etc.
+                                </p>
+                                    <pre>
+                                        <code>public static List<Tile> Linecast(Tile start, Tile end, int maxDistance = 0, bool stopAtLineOfSightBlocker = false)
+{
+    List<Tile> tiles = new List<Tile>();
+
+    int x = start.x;
+    int z = start.z;
+
+    int width = end.x - start.x;
+    int height = end.z - start.z;
+
+    Vector2 ds = Vector2.zero;
+    Vector2 de = Vector2.zero;
+
+    if (width < 0)
+    {
+        ds.x = -1;
+        de.x = -1;
+    }
+    else if (width > 0)
+    {
+        ds.x = 1;
+        de.x = 1;
+    }
+
+    if (height < 0)
+        ds.y = -1;
+    else if (height > 0)
+        ds.y = 1;
+
+    int longest = Mathf.Abs(width);
+    int shortest = Mathf.Abs(height);
+
+    if (longest <= shortest)
+    {
+        longest = Mathf.Abs(height);
+        shortest = Mathf.Abs(width);
+
+        if (height < 0)
+            de.y = -1;
+        else if (height > 0)
+            de.y = 1;
+
+        de.x = 0;
+    }
+
+    int numerator = longest >> 1;
+
+    for (int i = 0; i <= longest; i++)
+    {
+        if (x < 0 || x > Grid.size || z < 0 || z > Grid.size)
+            break;
+
+        if (stopAtLineOfSightBlocker && Grid.Get(x, z).blocksLineOfSight)
+            break;
+
+        tiles.Add(Grid.Get(x, z));
+        numerator += shortest;
+
+        if(!(numerator < longest))
+        {
+            numerator -= longest;
+            x += (int)ds.x;
+            z += (int)ds.y;
+        }
+        else
+        {
+            x += (int)de.x;
+            z += (int)de.y;
+        }
+    }
+
+    if(maxDistance > 0)
+    {
+        while (tiles.Count > maxDistance)
+            tiles.Remove(tiles.Last());
+    }
+
+    return tiles;
+}                                  </code>
+                            </pre>
+                        </div>
+                            <p><a href="https://github.com/AG4W/ChonkyChungus" target="_blank">Github</a> (please note that this project has been moved to a private SVN circa three months ago, this github page is no longer up-to-date)</p>
 					</div>
 				</div>
 			<!-- Footer -->
