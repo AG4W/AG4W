@@ -44,9 +44,17 @@
                             </p>
                         </div>
                         <div id="LeadEngineer">
+                            <h3><a name="LeadEngineer">Lead Engineer</a></h3>
                             <p>
                                 An interesting issue encountered early one was synching player characters positions and rotations client-side on all ships.
-                                Ships are moved on the server, but characters might have a slight delay - and the ships can have some pretty serious 
+                                Ships are moved on the server, but characters might have a slight delay - and the ships can have some pretty serious wave-action going on.
+
+                                Characters also cannot be parented under the ship hierarchally due to networking constraints, aswell as me wanting to facilitate boarding/cross-ship character gameplay if we want to in the future.
+                                So, this means a character controller with dynamic platforms, synched across the network.
+                            </p>
+                            <p>
+                                The solution is simpler than I expected - our character motor uses a "local parent" to determine the gravitational direction, the groundcheck updates which object this local parent is every frame.
+                                As for synching this across the network, instead of synching the actual client position - the client synchs the position <i>OFFSET</i> from the local parent, on the receiving remote client the player character thus gets the correct position regardless of network delay or misaligned ship positions.
                             </p>
                         </div>
                         <div id="LeadNetworkEngineer">
