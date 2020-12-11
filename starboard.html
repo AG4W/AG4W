@@ -27,94 +27,44 @@
 			<!-- Main -->
 				<div id="main">
 					<div class="inner">
+                        <img src="images/starboard/Starboard.png" alt="Starboard Logo" style="width:100%">
                     <!-- Boxes -->
                         <div id="description">
-							<h3>Stellar Winds</h3>
-							<p>Stellar Winds is a real-time strategy game inspired by Homeworld, Battlestar Galactica and Star Wars: Empire at War.
-								<br>The game is entirely procedurally generated baring VFX and ship models.
-								<br>All assets are created by me unless mentioned otherwise.
-								<br>All code is authored by me unless mentioned otherwise.
-							</p>
-                        </div>
-                        <div id="disclaimer">
-                            <p>Hi, the writeup for Stellar Winds is currently being worked on!
-								<br>In the meantime, please enjoy some footage!
-							</p>
-						</div>
-						<div id="">
-							<h4>Versions</h4>
-                            <p>
-                                <a href="#Prototype">* 0.1: Prototype</a>
-                                <br><a href="#AxiomaticKangaroo">* 0.2: Axiomatic Kangaroo</a>
-                                <br><a href="#MonstrousMonkey">* 0.3: Monstrous Monkey</a>
+							<p>Starboard is a multiplayer game where players team up as airship crews and sink eachother.
                             </p>
-						</div>
-						<div id="contents">
-							<h3><a name="Prototype">0.1: Prototype</a></h3>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/1.0/AridGrizzledCatfish.webm" type="video/webm">
-                                <source src="images/stellarwinds/1.0/AridGrizzledCatfish.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/1.0/BraveInfatuatedBandicoot.webm" type="video/webm">
-                                <source src="images/stellarwinds/1.0/BraveInfatuatedBandicoot.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/1.0/DangerousHairyGalapagostortoise.webm" type="video/webm">
-                                <source src="images/stellarwinds/1.0/DangerousHairyGalapagostortoise.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							
-							<h3><a name="AxiomaticKangaroo">0.2: Axiomatic Kangaroo</a></h3>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/2.0/GoodnaturedHotFrogmouth.webm" type="video/webm">
-                                <source src="images/stellarwinds/2.0/GoodnaturedHotFrogmouth.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							<p><i>Stellar Winds uses a real-time planet/atmosphere shader to procedurally generate awesome backdrops in the setting.
-								<br>Seen here in the main menu, with the ability to shift the settings as an easter egg.
-							</i></p>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/2.0/50vs50.mp4" type="video/webm">
-                                <source src="images/stellarwinds/2.0/50vs50.mp4" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							
-							<video controls width="100%">
-                                <source src="images/stellarwinds/2.0/PerfumedSoftDartfrog.webm" type="video/webm">
-                                <source src="images/stellarwinds/2.0/PerfumedSoftDartfrog.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-							</video>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/2.0/ScornfulReflectingBlackbird.webm" type="video/webm">
-                                <source src="images/stellarwinds/2.0/ScornfulReflectingBlackbird.webm" type="video/mp4">
-
-                                Sorry, your browser doesn't support embedded videos.
-                            </video>
-							<h3><a name="MonstrousMonkey">0.3: Monstrous Monkey</a></h3>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/3.0/stellarWindsMainMenu.mp4" type="video/webm">
-                                <source src="images/stellarwinds/3.0/stellarWindsMainMenu.webm" type="video/mp4">
-
-								Sorry, your browser doesn't support embedded videos.
-							</video>
-							<video controls width="100%">
-                                <source src="images/stellarwinds/3.0/SimplisticUnitedKudu.webm" type="video/webm">
-                                <source src="images/stellarwinds/3.0/SimplisticUnitedKudu.webm" type="video/mp4">
-
-								Sorry, your browser doesn't support embedded videos.
-							</video>
-						</div>
-				</div>
-
+                            <p>
+                                <br>Starboard was developed as a university assignment under a time period of three months.
+                                <br>My roles during development were mostly, but not limited to:
+                                <br>* <a href="#LeadEngineer">Lead Engineer</a>
+                                <br>* <a href="#LeadNetworkEngineer">Lead Network Engineer</a>
+                                <br>* <a href="#TechnicalArtistAnimator">Technical Artist/Animator</a>
+                            </P>
+                            <p>
+                                Below follows a quick writeup showcasing some of the more interesting notes from development, aswell as my personal thoughts during the project.
+                            </p>
+                        </div>
+                        <div id="LeadEngineer">
+                            <p>
+                                An interesting issue encountered early one was synching player characters positions and rotations client-side on all ships.
+                                Ships are moved on the server, but characters might have a slight delay - and the ships can have some pretty serious 
+                            </p>
+                        </div>
+                        <div id="LeadNetworkEngineer">
+                            <h3><a name="LeadNetworkEngineer">Lead Network Engineer</a></h3>
+                            <p>
+                                I made the decision to use a ready asset for the low-level network transport layer during pre-production, we had way to short a timeline to build our own from scratch.
+                                In this regard, I decided to use the awesome asset <a href="https://mirror-networking.com/">Mirror</a>, an open-sourced community replacement for Unitys now-deprecated HLAPI (High-Level API).
+                                <br>
+                                Mirror is nothing short of amazing, and proved to be incredibly easy to work with - and I could easily instruct my subordinate programmers and expect them to produce decent network code in a short order.
+                            </p>
+                            <p>
+                                I early on made the decision to ignore the server-authoritative pattern common in most competitive multiplayer games, this was mostly done due the Starboards' unique design making it rather hard to cheat in a constructive manner.
+                            </p>
+                        </div>
+                        <div id="TechnicalArtistAnimator">
+                        </div>
+                    </div>
+                </div>
 			<!-- Footer -->
 				<footer id="footer">
 					<div class="inner">
