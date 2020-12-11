@@ -56,6 +56,88 @@
                                 The solution is simpler than I expected - our character motor uses a "local parent" to determine the gravitational direction, the groundcheck updates which object this local parent is every frame.
                                 As for synching this across the network, instead of synching the actual client position - the client synchs the position <i>OFFSET</i> from the local parent, on the receiving remote client the player character thus gets the correct position regardless of network delay or misaligned ship positions.
                             </p>
+                            <div>
+                                <p>
+                                    Perfectly synched characters are thus achieved with this simple line of code.
+                                </p>
+                                <pre>
+                                    <code>
+if (!base.isLocalPlayer)
+{
+    this.transform.position = this.Ship.TransformPoint(synchedPosition);
+    
+    //align with local ship
+    this.transform.eulerAngles = this.Ship.eulerAngles;
+    //apply rotation
+    this.transform.rotation *= Quaternion.Euler(Vector3.up * synchedRotation);
+}
+else
+{
+    //calculate the posiiton for this local client
+    Vector3 newWorldPosition = Ship.TransformPoint(localPosition);
+    Vector3 moveDistance = newWorldPosition - worldPosition;
+
+    if (moveDistance != Vector3.zero)
+        this.transform.position += moveDistance;
+
+    if (!this.OverrideLocomotion)
+        Locomotion();
+    else
+    {
+        this.transform.position = this.OverridePosition;
+        this.transform.rotation = this.OverrideRotation;
+    }
+
+    worldPosition = this.transform.position;
+    localPosition = this.Ship.InverseTransformPoint(this.transform.position);
+
+    CmdSetSynchedPosition(this.Ship.InverseTransformPoint(this.transform.position));
+    CmdSetSynchedRotation(actualRotation);
+}
+                                    </code>
+                                </pre>
+                                <p>
+                                    The following methods handles our dynamic platform movement, this controller deals with stairs, ramps, moving platforms, vehicles, odd gravitational directions and any form of collider without a hitch.
+                                    Our collision detection is reactive, movement and locomotion happens first.
+                                </p>
+                                <pre>
+                                    <code>
+void Move()
+{
+    if (!isDecked)
+        gravity += this.transform.up * -9.82f * Time.deltaTime;
+    else
+        gravity = Vector3.zero;
+
+    //velocity = this.Animator.velocity + gravity + resolution;
+    velocity = this.transform.TransformDirection(Vector3.ClampMagnitude(this.targetDirection, 1f)) * (this.IsSprinting ? sprintSpeed : jogSpeed) + gravity + resolution;
+
+    this.transform.position += velocity * Time.deltaTime;
+    resolution = Vector3.zero;
+}
+//and collision detection
+void ResolveCollision()
+{
+    UpdateResolutionCollider();
+
+    for (int i = 0; i < Physics.OverlapSphereNonAlloc(this.transform.position, radius, resolutionBuffer, excludePlayer, QueryTriggerInteraction.Ignore); i++)
+    {
+        Transform t = resolutionBuffer[i].transform;
+
+        if (Physics.ComputePenetration(resolutionCollider, this.transform.position + this.transform.up * (height / 2f), this.transform.rotation, resolutionBuffer[i], t.position, t.rotation, out Vector3 direction, out float distance))
+        {
+            Vector3 penetrationVector = direction * distance;
+            //Vector3 velocityProjected = Vector3.Project(velocity, -direction);
+
+            this.transform.position = this.transform.position + penetrationVector;
+
+            //resolution -= velocityProjected;
+        }
+    }
+}
+                                    </code>
+                                </pre>
+                            </div>
                         </div>
                         <div id="LeadNetworkEngineer">
                             <h3><a name="LeadNetworkEngineer">Lead Network Engineer</a></h3>
