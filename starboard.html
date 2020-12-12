@@ -151,7 +151,17 @@ void ResolveCollision()
                             </p>
                             <p>
                                 I early on made the decision to ignore the server-authoritative pattern common in most competitive multiplayer games, this was mostly done due the Starboards' unique design making it rather hard to cheat in a constructive manner.
+                                There is one area where the server is authoritative, and that is the ship locomotion - players can send data to the server that will tell them if they want the ship to move forward, back, up or down aswell as steer left and right - however, the server controls the actual vehicle position.
+                                Clients will asymptotically interpolate (normal lerp without using frame deltatime) towards the known server position to avoid drift.
+
+                                The results can be seen below.
                             </p>
+                            <video controls width="100%">
+                                <source src="images/starboard/shipsprototype.mp4" type="video/webm">
+                                <source src="images/starboard/shipsprototype.mp4" type="video/mp4">
+
+                                Sorry, your browser doesn't support embedded videos.
+                            </video>
                         </div>
                         <div id="TechnicalArtistAnimator">
                         </div>
