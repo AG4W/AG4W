@@ -38,6 +38,8 @@
                                 <br>My roles during development were mostly, but not limited to:
                             </p>    
                                 <br>* <a href="#LeadEngineer">Lead Engineer</a>
+                                <br>    * <a href="#RepairMinigames">Repair Minigames</a>
+                                <br>    * <a href="NetworkingPlayerCharacters">Networking Player Characters</a>
                                 <br>* <a href="#LeadNetworkEngineer">Lead Network Engineer</a>
                                 <br>* <a href="#TechnicalArtistAnimator">Technical Artist/Animator</a>
                             </P>
@@ -47,6 +49,32 @@
                         </div>
                         <div id="LeadEngineer">
                             <h3><a name="LeadEngineer">Lead Engineer</a></h3>
+                            <h4><a name="RepairMinigames">Repair Minigames</a></h4>
+                            <p>
+                                When a ship gets shot, there's a chance a component might be damaged - for Starboard I wanted to do something abit more involved in terms of repair rather than hitting the station with a hammer as is common in most videogames.
+                                I'm a huge fan of diegeticism and immersion in games, so I decided to implement some unique minigames that works as repairs.
+
+                                Minigames are generic prefabs that can be placed within station prefabs, and are randomly selected if there's more than one.
+                                This was done as to create some variety in what needs repairs when.
+
+                                Here are two of the minigames currently in Starboard, the first is the simple prototype where the player just needs to turn a wheel.
+                            </p>
+                            <video controls width="100%">
+                                <source src="images/starboard/starboardminigameprototype.mp4" type="video/webm">
+                                <source src="images/starboard/starboardminigameprototype.mp4" type="video/mp4">
+
+                                Sorry, your browser doesn't support embedded videos.
+                            </video>
+                            <p>
+                                And the other is a bit more involved, it requires the player to match a couple of fluid meters to a randomized value.
+                            </p>
+                            <video controls width="100%">
+                                <source src="images/starboard/starboardpressurebox.mp4" type="video/webm">
+                                <source src="images/starboard/starboardpressurebox.mp4" type="video/mp4">
+
+                                Sorry, your browser doesn't support embedded videos.
+                            </video>
+                            <h4><a name="NetworkingPlayerCharacters">Networking Player Characters</a></h4>
                             <p>
                                 An interesting issue encountered early one was synching player characters positions and rotations client-side on all ships.
                                 Ships are moved on the server, but characters might have a slight delay - and the ships can have some pretty serious wave-action going on.
