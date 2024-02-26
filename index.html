@@ -19,6 +19,11 @@
 <body>
     <!--contains all the div-->
     <div id="all">
+        <!-- <div id="video background">
+            <video autoplay loop muted plays-inline class="background-clip">
+                <source src="images/wolfpack/wolfpack trailer.mp4" type="video/mp4">
+            </video>
+        </div> -->
     <!--mouse  follower-->
         <div class="cursor"></div>
     <!--mouse  follower-->
@@ -65,7 +70,7 @@
         <!--Menubar End-->
           <!--Header-->
         <div id="header">
-            <div id="particles"></div>
+            <!-- <div id="particles"></div> -->
               <!--Social Media Links-->
             <div class="social-media-links">
                <!--<a href="#"><img src="images/instagram logo.png" class="social-media" alt="instagram-logo"></a><!--Your instagram homepage link inser in place of "#"-->
@@ -77,16 +82,15 @@
             <!--Social Media Links end-->
             <div class="header-content">
                 <div class="header-content-box">
-                <div class="firstline"><span class="color">Axel </span>Gustafsson</div>
-                <div class="secondline">
-                I'm a
-            <span class="txt-rotate color" data-period="1200"data-rotate='[ " Game Developer.", " Network Engineer.", " Human." ]'></span>
-            <span class="slash">|</span>
+                    <div class="firstline"><span class="color">Axel </span>Gustafsson</div>
+                    <div class="secondline">I'm a
+                    <span class="txt-rotate color" data-period="1200"data-rotate='[ " Game Developer.", " Network Engineer.", " Human." ]'></span>
+                    <span class="slash">|</span>
                 </div>
-                        <div class="contact">
-                            <a href="mailto:contact@axelgustafsson.se"><img src="images/mail.png" alt="email-pic" class="contactpic"></a><!--Your email Id write in place of "#"-->
-                            <a href="tel:+46727128283"><img src="images/call.png" alt="phone-pic" class="contactpic"></a><!--Your telephone number Id write in place of "#"-->
-                        </div>    
+                    <div class="contact">
+                        <a href="mailto:contact@axelgustafsson.se"><img src="images/mail.png" alt="email-pic" class="contactpic"></a><!--Your email Id write in place of "#"-->
+                        <a href="tel:+46727128283"><img src="images/call.png" alt="phone-pic" class="contactpic"></a><!--Your telephone number Id write in place of "#"-->
+                    </div>    
                 </div>
             </div>
             <!--header image-->
@@ -336,84 +340,138 @@
             </div> -->
             <!-- <div class="portfolio-header"> <span class="color"> My </span> Portfolio
             <span class ="header-caption"> Some Of My <span class="color"> Works</span></span></div> -->
-             <div id="portfolio-content">
-                 <div class="portfolio portfolio-first">
-                     <div class="portfolio-image">
-                        <!-- <img src="images/wolfpack/wolfpack capsule.png" alt="wolfpack capsule"> -->
-                        <video width="100%" autoplay="true" loop="true">
-                            <source src="images/wolfpack/wolfpack trailer.mp4" type="video/mp4" />
-                        </video>
-                     </div>
-                     <div class="portfolio-text">
-                         <h2>Wolfpack</h2>
-                         <p>Shipped Title</p>
-                         <p>Lead Network Engineer, Junior Gameplay Engineer</p>
-                         <p><i>"The genre-defining submarine simulator where up to 28 players operate u-boats during the second world war, re-living the thrill and suspense of submarine warfare inspired by classic movies such as Das Boot."</i></p>
-                         <p>Led the redevelopment of the old netcode, migrating the network architecture from P2P-sessions to a custom hybrid-server-client architecture with support for third-party dedicated hosts.</p>
-                         <p>Integrated Steamworks features, such as ranked matchmaking, social management and user-generated content, as well as developing party-based queueing and matchmaking.</p>
-                         <p>Directed a comprehensive overhaul of the game Wolfpack's user interface, focusing on enhancing user experience, visual aesthetics and accessibility.</p>
-                         <p>Implemented CI/CD pipelines to automate testing and deployment processes, as well as automatically generated patch notes, from source control commits.</p>
-                         <p>Planned and executed community engagement strategies, including regular updates, contests, community beta testing, and Q&A sessions.</p>
-                         <div class="button"><a href="https://store.steampowered.com/app/490920/Wolfpack/"><button><span class="index"> View On Steam<i class="gg-arrow-right"></i></span></button></a></div>
-                     </div>
-                 </div>
-                 <div class="portfolio portfolio-fifth">
-                    <div class=" portfolio-image">
-                        <!-- <img src="images/optimal toucan/weapon customisation.bmp" alt="optimal toucan capsule"> -->
-                        <video width="100%" autoplay="true" loop="true">
+             <!-- <div id="portfolio-content"> -->
+                <div class="css-slider-wrapper">
+        
+                    <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
+                    <input type="radio" name="slider" class="slide-radio2" id="slider_2">
+                    <input type="radio" name="slider" class="slide-radio3" id="slider_3">
+                    <input type="radio" name="slider" class="slide-radio4" id="slider_4">
+                    <input type="radio" name="slider" class="slide-radio5" id="slider_5">
+                    
+                    <div class="slider-pagination">
+                        <label for="slider_1" class="page1"></label> 
+                        <label for="slider_2" class="page2"></label>
+                        <label for="slider_3" class="page3"></label>
+                        <label for="slider_4" class="page4"></label>
+                        <label for="slider_5" class="page5"></label>
+                    </div>
+                    
+                    <div class="next control">
+                        <label for="slider_1" class="numb1"><i class="fa fa-arrow-circle-right"></i></label>
+                        <label for="slider_2" class="numb2"><i class="fa fa-arrow-circle-right"></i></label>
+                        <label for="slider_3" class="numb3"><i class="fa fa-arrow-circle-right"></i></label>
+                        <label for="slider_4" class="numb4"><i class="fa fa-arrow-circle-right"></i></label>
+                        <label for="slider_5" class="numb5"><i class="fa fa-arrow-circle-right"></i></label>
+                    </div>
+                    <div class="previous control">
+                        <label for="slider_1" class="numb1"><i class="fa fa-arrow-circle-left"></i></label>
+                        <label for="slider_2" class="numb2"><i class="fa fa-arrow-circle-left"></i></label>
+                        <label for="slider_3" class="numb3"><i class="fa fa-arrow-circle-left"></i></label>
+                        <label for="slider_4" class="numb4"><i class="fa fa-arrow-circle-left"></i></label>
+                        <label for="slider_5" class="numb5"><i class="fa fa-arrow-circle-left"></i></label>
+                    </div>
+                    
+                    
+                    <div class="slider slide1">
+                        <div class="portfolio portfolio-first">
+                            <video autoplay loop muted plays-inline class="background-clip">
+                                <source src="images/wolfpack/wolfpack trailer.mp4" type="video/mp4">
+                            </video>
+                            <div class="portfolio-image">
+                            <!-- <img src="images/wolfpack/wolfpack capsule.png" alt="wolfpack capsule"> -->
+                            <!-- <video width="100%" autoplay="true" loop="true">
+                                <source src="images/wolfpack/wolfpack trailer.mp4" type="video/mp4" />
+                            </video> -->
+                                
+                            </div>
+                            <div class="portfolio-text">
+                                <h2>Wolfpack</h2>
+                                <p>Shipped Title</p>
+                                <p>Lead Network Engineer, Junior Gameplay Engineer</p>
+                                <p><i>"The genre-defining submarine simulator where up to 28 players operate u-boats during the second world war, re-living the thrill and suspense of submarine warfare inspired by classic movies such as Das Boot."</i></p>
+                                <p>Led the redevelopment of the old netcode, migrating the network architecture from P2P-sessions to a custom hybrid-server-client architecture with support for third-party dedicated hosts.</p>
+                                <p>Integrated Steamworks features, such as ranked matchmaking, social management and user-generated content, as well as developing party-based queueing and matchmaking.</p>
+                                <p>Directed a comprehensive overhaul of the game Wolfpack's user interface, focusing on enhancing user experience, visual aesthetics and accessibility.</p>
+                                <p>Implemented CI/CD pipelines to automate testing and deployment processes, as well as automatically generated patch notes, from source control commits.</p>
+                                <p>Planned and executed community engagement strategies, including regular updates, contests, community beta testing, and Q&A sessions.</p>
+                                <div class="button"><a href="https://store.steampowered.com/app/490920/Wolfpack/"><button><span class="index"> View On Steam<i class="gg-arrow-right"></i></span></button></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider slide2">
+                        <video autoplay loop muted plays-inline class="background-clip">
                             <source src="images/optimal toucan/weapon customisation.webm" type="video/webm" />
                         </video>
+                        <div class="portfolio portfolio-fifth">
+                            <div class="portfolio-text">
+                                <h2>Optimal Toucan</h2>
+                                <p>In Development</p>
+                                <p><i>"Escape from Tarkov meets Darkest Dungeon in this cooperative dungeon crawler, where players team up to brave procedural dungeons in a harsh world with hardcore health mechanics, permadeath, fully customizeable equipment, traps, environment hazards and otherwordly horrors."</i></p>
+                                <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
+                            </div>
+                            <div class=" portfolio-image">
+                                <!-- <img src="images/optimal toucan/weapon customisation.bmp" alt="optimal toucan capsule"> -->
+                                
+                            </div>
+                        </div>
                     </div>
-                    <div class="portfolio-text">
-                        <h2>Optimal Toucan</h2>
-                        <p>In Development</p>
-                        <p><i>"Escape from Tarkov meets Darkest Dungeon in this cooperative dungeon crawler, where players team up to brave procedural dungeons in a harsh world with hardcore health mechanics, permadeath, fully customizeable equipment, traps, environment hazards and otherwordly horrors."</i></p>
-                        <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
-                    </div>
-                </div>
-                 <div class="portfolio portfolio-second">
-                    <div class="portfolio-text">
-                        <h2>Starboard</h2>
-                        <p>University Project</p>
-                        <p>Lead Developer, sole Network Engineer</p>
-                        <p><i>"An online player-versus-player game where players crew steampunk airships and attempt to destroy each other, featuring unique characters, in-depth repair system mechanics and lots of hats."</i></p>
-                        <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
-                        <div class="button"><a href="https://ag4w.itch.io/starboard"><button><span class="index"> View on itch.io<i class="gg-arrow-right"></i></span></button></a></div>
-                    </div>
-                    <div class="portfolio-image">
-                        <!-- <img src="images/starboard/starboard capsule.bmp" alt="starboard capsule"> -->
-                        <video width="100%" autoplay="true" loop="true">
+                    <div class="slider slide3">
+                        <video autoplay loop muted plays-inline class="background-clip">
                             <source src="images/starboard/starboardtrailer.mp4" type="video/mp4" />
                         </video>
+                        <div class="portfolio portfolio-second">
+                            
+                            <div class="portfolio-image">
+                                <!-- <img src="images/starboard/starboard capsule.bmp" alt="starboard capsule"> -->
+                                
+                            </div>
+                            <div class="portfolio-text">
+                                <h2>Starboard</h2>
+                                <p>University Project</p>
+                                <p>Lead Developer, sole Network Engineer</p>
+                                <p><i>"An online player-versus-player game where players crew steampunk airships and attempt to destroy each other, featuring unique characters, in-depth repair system mechanics and lots of hats."</i></p>
+                                <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
+                                <div class="button"><a href="https://ag4w.itch.io/starboard"><button><span class="index"> View on itch.io<i class="gg-arrow-right"></i></span></button></a></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="portfolio portfolio-third">
-                    <div class="portfolio-image">
-                        <img src="images/bandana bones/bandana bones capsule.bmp" alt="bandana bones capsule">
+                    <div class="slider slide4">
+                        <div class="portfolio-image">
+                            <img class="background-image" src="images/bandana bones/bandana bones capsule.bmp" alt="bandana bones capsule">
+                        </div>
+                        <div class="portfolio portfolio-third">
+                            <div class="portfolio-text">
+                                <h2>Bandana Bones</h2>
+                                <p>University Project</p>
+                                <p>Lead Developer</p>
+                                <p><i>"A mobile roguelike with a comedic tone, inspired by iconic movies such as Indiana Jones and The Mummy."</i></p>
+                                <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
+                            </div>
+                            <!-- <div class="portfolio-image">
+                                <img src="images/bandana bones/bandana bones capsule.bmp" alt="bandana bones capsule">
+                            </div> -->
+                        </div>
                     </div>
-                    <div class="portfolio-text">
-                        <h2>Bandana Bones</h2>
-                        <p>University Project</p>
-                        <p>Lead Developer</p>
-                        <p><i>"A mobile roguelike with a comedic tone, inspired by iconic movies such as Indiana Jones and The Mummy."</i></p>
-                        <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
-                    </div>
-                </div>
-                <div class="portfolio portfolio-fourth">
-                    <div class=" portfolio-image">
-                        <!-- <img src="images/project rogue/project rogue capsule.bmp" alt="project rogue capsule"> -->
-                        <video width="100%" autoplay="true" loop="true">
+                    <div class="slider slide5">
+                        <video autoplay loop muted plays-inline class="background-clip">
                             <source src="images/project rogue/UglyGleamingConch.webm" type="video/webm" />
                         </video>
-                    </div>
-                    <div class="portfolio-text">
-                        <h2>Project Rogue</h2>
-                        <p>Prototype</p>
-                        <p><i>"A single-player dungeon crawler where the player recruits and manages a company of treasure hunters, glory-seekers, archeologists and other adventurers in a procedurally generated world."</i></p>
-                        <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
+                        <div class="portfolio portfolio-fourth">
+                            <div class=" portfolio-image">
+                                <!-- <img src="images/project rogue/project rogue capsule.bmp" alt="project rogue capsule"> -->
+                                
+                            </div>
+                            <div class="portfolio-text">
+                                <h2>Project Rogue</h2>
+                                <p>Prototype</p>
+                                <p><i>"A single-player dungeon crawler where the player recruits and manages a company of treasure hunters, glory-seekers, archeologists and other adventurers in a procedurally generated world."</i></p>
+                                <div class="button"><a href="#"><button><span class="index"> View Project<i class="gg-arrow-right"></i></span></button></a></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                 </div>
+                        
                     <!--copyright-section You Can Remove After Downloading-->
             <!-- <div class="footer">
                 <div class="footer-text">
@@ -421,7 +479,7 @@
                 </div>
                </div> -->
        <!--copyright-section-->
-             </div>
+             <!-- </div> -->
         <!--portfolio end-->
         <!--blog-->
         <!-- <div id="blog">
